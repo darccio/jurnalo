@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'graphene_django',
+    #'django_python3_ldap',
+    #'graphene_django',
     'jurnalo',
 ]
 

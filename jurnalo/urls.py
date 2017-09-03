@@ -13,6 +13,6 @@ urlpatterns = [
     url(r'^accounts/login/$', views.login, {'template_name': 'admin/login.html'}),
     url(r'^accounts/logout/$', views.logout),
     url(r'^admin/', admin.site.urls),
-    url(r'^graphql$', PrivateGraphQLView.as_view(graphiql=True)),
+    #url(r'^graphql$', PrivateGraphQLView.as_view(graphiql=True)),
 ]
 
