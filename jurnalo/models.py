@@ -36,7 +36,7 @@ __record_version__=1
 @python_2_unicode_compatible
 class Record(models.Model):
     version = models.PositiveSmallIntegerField(default=__record_version__)
-    text = models.CharField(max_length=140)
+    text = models.CharField(max_length=500)
     creator = models.ForeignKey(Entity, related_name='records')
     on_behalf_of = models.ForeignKey(Entity, null=True, related_name='+')
     previous_record = models.ForeignKey('Record', null=True, related_name='next_record')
@@ -44,6 +44,7 @@ class Record(models.Model):
     passed_at = models.DateTimeField()
     hash = models.CharField(max_length=64)
     uid = models.CharField(max_length=8)
+    info_url = models.URLField(null=True)
     related_to = models.ManyToManyField('Record', related_name='related_records')
     protected = models.BooleanField(default=True)
 
@@ -65,7 +66,7 @@ class Record(models.Model):
         else:
             # Genesis record
             previous_record_hash = '0' * 64
-        inner_hash = hashlib.sha256(self.text.encode('utf-8') + self.creator.urn.encode('utf-8') + self.on_behalf_of.urn.encode('utf-8')).hexdigest()
+        inner_hash = hashlib.sha256(self.text.encode('utf-8') + self.creator.urn.encode('utf-8') + self.on_behalf_of.urn.encode('utf-8') + self.info_url.encode('utf-8')).hexdigest()
         created_at = _encode_datetime(self.created_at)
         passed_at = _encode_datetime(self.passed_at)
         record_hex = version + previous_record_hash + inner_hash + created_at + passed_at
